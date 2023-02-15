@@ -6,9 +6,8 @@ metadata:
   labels:
     app: nginx
     tier: backend
-    version: "{{.nginxVersion}}"
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - port: 80
   selector:
@@ -25,17 +24,15 @@ spec:
     matchLabels:
       app: nginx
       tier: backend
-      version: "{{.nginxVersion}}"
   template:
     metadata:
       labels:
         app: nginx
         tier: backend
-        version: "{{.nginxVersion}}"
     spec:
       containers:
       - name: nginx-test
-        image: ccr.ccs.tencentyun.com/shuhe/nginx:stable
+        image: harbor.southgis.io/library/nginx:v1
         ports:
         - containerPort: 80
         volumeMounts:
@@ -52,7 +49,7 @@ metadata:
   name: nginx-expose
 spec:
   rules:
-  - host: $EnvName$-nginx-expose.app.8slan.com
+  - host: nginx.southgis.io
     http:
       paths:
       - backend:
