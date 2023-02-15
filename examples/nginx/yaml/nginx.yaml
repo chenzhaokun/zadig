@@ -47,7 +47,10 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: nginx-expose
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
   - host: nginx.southgis.io
     http:
